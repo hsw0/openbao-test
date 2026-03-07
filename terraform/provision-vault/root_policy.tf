@@ -20,10 +20,10 @@ resource "vault_policy" "root_superuser_handrail" {
 
   policy = <<EOT
 path "sys/policies/acl/superuser" {
-  capabilities = ["read", "list", "scan"]
+  capabilities = ["read"]
 }
 path "sys/policies/acl/superuser-handrail" {
-  capabilities = ["read", "list", "scan"]
+  capabilities = ["read"]
 }
 
 path "identity/entity/id/{{identity.entity.id}}" {
@@ -41,16 +41,20 @@ path "sys/seal" {
   capabilities = ["deny"]
 }
 path "sys/auth/token" {
-  capabilities = ["read", "list", "scan", "sudo"]
+  capabilities = ["read"]
 }
-path "sys/auth/admin-oidc" {
-  capabilities = ["read", "list", "scan"]
+path "sys/mounts/auth/token/*" {
+  capabilities = ["read"]
 }
-path "auth/token" {
-  capabilities = ["read", "list", "scan"]
+path "sys/auth/${vault_jwt_auth_backend.root_oidc.path}" {
+  capabilities = ["read"]
 }
-path "auth/admin-oidc/*" {
-  capabilities = ["read", "list", "scan"]
+path "sys/mounts/auth/${vault_jwt_auth_backend.root_oidc.path}/*" {
+  capabilities = ["read"]
 }
+path "auth/${vault_jwt_auth_backend.root_oidc.path}/*" {
+  capabilities = ["read", "list"]
+}
+
 EOT
 }

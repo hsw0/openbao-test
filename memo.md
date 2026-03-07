@@ -113,10 +113,9 @@ EOF
 ```
 
 ```bash
-bao login -method=oidc -path=admin-oidc
+bao login -method=oidc
 
 bao token lookup
-bao read sys/auth/token
 ```
 
 ```bash

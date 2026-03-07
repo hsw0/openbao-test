@@ -16,6 +16,10 @@ path "sys/mounts" {
   capabilities = ["read"]
 }
 
+path "sys/tools/+" {
+  capabilities = ["update"]
+}
+
 path "sys/auth" {
   capabilities = ["read"]
 }
@@ -28,7 +32,7 @@ path "sys/policies/acl/default" {
   capabilities = ["read"]
 }
 
-path "sys/policies/acl/default-user" {
+path "sys/policies/acl/user" {
   capabilities = ["read"]
 }
 

@@ -33,16 +33,34 @@ resource "vault_jwt_auth_backend_role" "world_oidc_user" {
   token_no_default_policy = false
   token_policies          = ["user"]
 
-  user_claim = "preferred_username"
+  user_claim   = "preferred_username"
+  groups_claim = "roles"
   claim_mappings = {
     "/preferred_username" = "preferred_username"
     "/oid"                = "oid"
+    "/sub"                = "sub"
+    "/tid"                = "tenant_id"
   }
   oidc_scopes = ["openid", "profile", "email"]
   allowed_redirect_uris = [
     "http://localhost/oidc/callback",
     "http://localhost:8200/ui/vault/auth/${vault_jwt_auth_backend.world_oidc.path}/oidc/callback"
   ]
-  verbose_oidc_logging = true
 
+  #verbose_oidc_logging = false
+}
+
+
+resource "vault_generic_endpoint" "world_oidc_role_user" {
+  namespace = vault_namespace.world.path_fq
+  path      = vault_jwt_auth_backend_role.world_oidc_user.id
+
+  ignore_absent_fields = true
+  disable_delete       = true
+
+  data_json = jsonencode({
+    token_policies_template_claims = true
+
+    oauth2_metadata = []
+  })
 }

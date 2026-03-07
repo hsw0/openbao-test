@@ -9,3 +9,13 @@ resource "vault_generic_endpoint" "sys_config_cors" {
     allowed_origins = ["*"]
   })
 }
+
+resource "vault_audit_request_header" "x_forwarded_for" {
+  name = "X-Forwarded-For"
+  hmac = false
+}
+
+resource "vault_audit_request_header" "forwarded" {
+  name = "Forwarded"
+  hmac = false
+}

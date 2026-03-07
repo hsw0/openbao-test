@@ -52,6 +52,6 @@ resource "vault_jwt_auth_backend_role" "root_oidc_admin" {
     "http://localhost/oidc/callback",
     "http://localhost:8200/ui/vault/auth/${vault_jwt_auth_backend.root_oidc.path}/oidc/callback"
   ]
-  verbose_oidc_logging = true
 
+  #verbose_oidc_logging = false
 }
