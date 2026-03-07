@@ -13,6 +13,24 @@ listener "tcp" {
   address = "[::]:8200"
   cluster_address = "[::]:8201"
   tls_disable = true
+  telemetry {
+    disallow_metrics = true
+  }
+}
+
+listener "tcp" {
+  address = "[::]:9000"
+  cluster_address = "[::1]:9001"
+  tls_disable = true
+  telemetry {
+    metrics_only                   = true
+    unauthenticated_metrics_access = true
+  }
+}
+
+telemetry {
+  prometheus_retention_time = "30s"
+  disable_hostname = true
 }
 
 storage "raft" {

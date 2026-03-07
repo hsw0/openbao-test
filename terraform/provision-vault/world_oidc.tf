@@ -4,11 +4,14 @@ resource "vault_jwt_auth_backend" "world_oidc" {
 
   type = "oidc"
 
-  oidc_discovery_url  = data.terraform_remote_state.entra.outputs.entra_app.oidc_issuer
-  oidc_client_id      = data.terraform_remote_state.entra.outputs.entra_app.oidc_client_id
-  oidc_client_secret  = data.terraform_remote_state.entra.outputs.entra_app_secret
+  oidc_discovery_url = data.terraform_remote_state.entra.outputs.entra_app.oidc_issuer
+
   oidc_response_mode  = "query"
   oidc_response_types = ["code"]
+
+  oidc_client_id                = data.terraform_remote_state.entra.outputs.entra_app.oidc_client_id
+  oidc_client_secret_wo         = data.terraform_remote_state.entra.outputs.entra_app_secret
+  oidc_client_secret_wo_version = parseint(substr(sha256(data.terraform_remote_state.entra.outputs.entra_app_secret), 0, 6), 16)
 
   disable_remount = true
   default_role    = "user"
@@ -37,11 +40,14 @@ resource "vault_jwt_auth_backend_role" "world_oidc_user" {
   groups_claim = "roles"
   claim_mappings = {
     "/preferred_username" = "preferred_username"
-    "/oid"                = "oid"
-    "/sub"                = "sub"
-    "/tid"                = "tenant_id"
+
+    "/sid" = "sid"
+    "/sub" = "sub"
+    "tid"  = "tenant_id"
+    "name" = "name"
+    "oid"  = "object_id"
   }
-  oidc_scopes = ["openid", "profile", "email"]
+  oidc_scopes = ["openid", "profile", "email", "https://graph.microsoft.com/.default"]
   allowed_redirect_uris = [
     "http://localhost/oidc/callback",
     "http://localhost:8200/ui/vault/auth/${vault_jwt_auth_backend.world_oidc.path}/oidc/callback"

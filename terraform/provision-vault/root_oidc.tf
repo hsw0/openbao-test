@@ -5,10 +5,12 @@ resource "vault_jwt_auth_backend" "root_oidc" {
   type = "oidc"
 
   oidc_discovery_url  = data.terraform_remote_state.entra.outputs.entra_app.oidc_issuer
-  oidc_client_id      = data.terraform_remote_state.entra.outputs.entra_app.oidc_client_id
-  oidc_client_secret  = data.terraform_remote_state.entra.outputs.entra_app_secret
   oidc_response_mode  = "query"
   oidc_response_types = ["code"]
+
+  oidc_client_id                = data.terraform_remote_state.entra.outputs.entra_app.oidc_client_id
+  oidc_client_secret_wo         = data.terraform_remote_state.entra.outputs.entra_app_secret
+  oidc_client_secret_wo_version = parseint(substr(sha256(data.terraform_remote_state.entra.outputs.entra_app_secret), 0, 6), 16)
 
   disable_remount = true
   default_role    = "user"
@@ -45,7 +47,11 @@ resource "vault_jwt_auth_backend_role" "root_oidc_admin" {
   user_claim = "preferred_username"
   claim_mappings = {
     "/preferred_username" = "preferred_username"
-    "/oid"                = "oid"
+
+    "/sid" = "sid"
+    "/sub" = "sub"
+    "tid"  = "tenant_id"
+    "oid"  = "object_id"
   }
   oidc_scopes = ["openid", "profile", "email"]
   allowed_redirect_uris = [
