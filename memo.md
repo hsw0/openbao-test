@@ -6,13 +6,13 @@ VAULT_ADDR=http://localhost:8200 bao operator init
 ```
 
 ```
-Recovery Key 1: yb97MKDYGR2ff5oF6sWC8Z7a+JDsZNrRATy5H7zSAfU+
-Recovery Key 2: Q7bcbxMD5qCJNgMNTYusmsn9QkRyF8MZBz0P/0+v3HoW
-Recovery Key 3: 9npGpqsNiFTNqb7hqEchN+ECkswlmimn4cOBflxMFWhQ
-Recovery Key 4: DCccHauNSJuFIbv9u4m48Tog0YEZYhWU7CqAfLEnkVWC
-Recovery Key 5: pA8Jpk3eg0xC/bq1OXJONtz3PPwGx2iNQ2EASnwCqTbQ
+Recovery Key 1: m3Ns0dbcWhorYPbWD+k/UXpV4b53gwj/8FoDMdg6f5Jr
+Recovery Key 2: dIVeQc5EoY/2wWc91W0sKuTmAc6mwSSkng9HoqtvcfmD
+Recovery Key 3: CD8TtDTxWWa0nSTkZeaupVO0b4EQrPWIbOc5qGs7je2n
+Recovery Key 4: 25+yTZeFV4RQPAPuIvhhZv8rANuEzMK8SjalbTl1cuqk
+Recovery Key 5: 7QQAMERfgllpJdl2T9aDA+NWkSFU6IvdRJKn6FJUDvRc
 
-Initial Root Token: s.sMgpS7L8TDGLCARxYT7WmpAg
+Initial Root Token: s.EqWokxTuwSEhp3cDaJKwbAvX
 
 Success! Vault is initialized
 
@@ -22,7 +22,7 @@ securely distribute the key shares printed above.
 
 ```
 export VAULT_ADDR=http://localhost:8200
-export VAULT_TOKEN='s.sMgpS7L8TDGLCARxYT7WmpAg'
+export VAULT_TOKEN='s.EqWokxTuwSEhp3cDaJKwbAvX'
 ```
 
 ## first setup

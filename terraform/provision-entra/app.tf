@@ -1,3 +1,7 @@
+locals {
+  vault_addr  = "http://localhost:8200"
+  oidc_mounts = ["oidc"]
+}
 
 resource "azuread_application_registration" "this" {
   display_name     = "OpenBao local test"
@@ -11,14 +15,13 @@ resource "azuread_application_redirect_uris" "this" {
   application_id = azuread_application_registration.this.id
   type           = "Web"
 
-  redirect_uris = [
+  redirect_uris = concat([
     # For local CLI login
     "http://localhost/oidc/callback",
-
-    "http://localhost:8200/ui/vault/auth/admin-oidc/oidc/callback",
-    "http://localhost:8200/v1/auth/oidc/oidc/callback",
-    "http://localhost:8200/ui/vault/auth/oidc/oidc/callback"
-  ]
+    ], flatten([for mount in local.oidc_mounts : [
+      "${local.vault_addr}/v1/auth/${mount}/oidc/callback",
+      "${local.vault_addr}/ui/vault/auth/${mount}/oidc/callback",
+  ]]))
 }
 
 resource "random_uuid" "approle_vault_admin" {}
