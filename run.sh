@@ -1,6 +1,6 @@
 #!/bin/bash
 
-readonly IMAGE='ghcr.io/openbao/openbao-ubi:2.5.1@sha256:f9fca77995fa0956b203c8f6eabc8bc15e7af1a817a938f89bca1645ed55bac5'
+readonly IMAGE='ghcr.io/openbao/openbao-ubi:2.5.3@sha256:49b9911dfaa1d65084ecc415d043d2b18f593c53ff1bd46b4a314fc77d238a26'
 
 main() {
     local -r SCRIPT_PATH=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )

@@ -63,9 +63,9 @@ plugin "secret" "consul" {
 
 plugin "secret" "aws" {
   image       = "ghcr.io/openbao/openbao-plugin-secrets-aws"
-  version     = "v0.2.0"
+  version     = "v0.3.0-beta20260326"
   binary_name = "openbao-plugin-secrets-aws"
-  sha256sum   = "991732feb606737baf727cba0ffa99def84f440d50c21c12ff0c4e7c5bdcc0f1"
+  sha256sum   = "e02d8a6eff93a90ab6c8beac0d3e5d2e4fb0fe8c86201748bbbc56113b534be9"
 }
 
 plugin "auth" "aws" {
